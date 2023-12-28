@@ -1,14 +1,14 @@
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Row, Col, Image, ListGroup, Card, Button} from 'react-bootstrap';
+import { Row, Col, ListGroup, Card, Button} from 'react-bootstrap';
+import Image from "react-bootstrap/Image";
 import Rating from "../components/Rating";
 import products from "../products";
 
 const ProductScreen = () => {
 
     const  { id: productId } = useParams();
-    const product = products.find((p) => p.id === productId);
-
+    const product = products.find((p) => p.id === productId); 
 
     return(
         <>
