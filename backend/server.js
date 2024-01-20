@@ -1,9 +1,11 @@
 import express from "express";
 import dotenv from 'dotenv';
-// Function should be declare before any of the env file declared variables
-dotenv.config();      
+dotenv.config();        // Function should be declare before any of the env file declared variables
+import connectDB from './config/db.js';
 import products from './data/products.js';
 const port = process.env.PORT || 5000;
+
+connectDB();
 
 const app = express();
 
