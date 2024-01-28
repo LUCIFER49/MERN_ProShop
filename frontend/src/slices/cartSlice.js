@@ -28,11 +28,18 @@ const cartSlice = createSlice({
       state.shippingPrice = addDecimals(state.itemsPrice > 100 ? 0 : 10);
 
       //Calculate Tax Price (18% Tax)
-    //   state.taxPrice
+      state.taxPrice = addDecimals(Number((0.18 * state.itemsPrice).toFixed(2)));
 
       //Calculate Total Price
+      state.totalPrice = (
+        Number(state.itemsPrice) + Number(state.shippingPrice) + Number(state.taxPrice)
+      ).toFixed(2)
+
+      localStorage.setItem('cart', JSON.stringify(state));
     },
   }, //it will contains all the functions(or actions) that are related to cart
 });
+
+export const { addToCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
