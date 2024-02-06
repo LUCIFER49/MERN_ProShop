@@ -26,7 +26,6 @@ const ProductScreen = () => {
   const navigate = useNavigate();
 
   const [qty, setQty] = useState(1);
-
   
   const { id: productId } = useParams();
   
