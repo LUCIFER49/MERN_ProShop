@@ -3,7 +3,8 @@ import dotenv from 'dotenv';
 dotenv.config();        // Function should be declare before any of the env file declared variables
 import connectDB from './config/db.js';
 import productRoutes from "./routes/productRoutes.js";
-import { notFound, errorHandler } from "./middleware/errorMindleware.js";
+import userRoutes from "./routes/userRoutes.js";
+import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 const port = process.env.PORT || 5000;
 
 connectDB();    // Connect to MongoDB
@@ -16,6 +17,7 @@ app.get("/", (req, res) => {
 });
 
 app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
