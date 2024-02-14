@@ -5,7 +5,21 @@ import User from "../models/userModel.js";
 // @route    POST /api/users/login
 // @access   Public
 const authUser = asyncHandler(async (req, res) => {
-  res.send("Auth user");
+  const { email, password } = req.body;
+
+  const user = await User.findOne({ email });
+
+  if (user && (await user.matchPassword(password))) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    });
+  } else {
+    res.status(401);
+    throw new Error('Invalid email or password');
+  }
 });
 
 // @desc     Register user
@@ -43,12 +57,11 @@ const getUsers = asyncHandler(async (req, res) => {
   res.send("get users");
 });
 
-
 // @desc     Get User by ID
 // @route    GET /api/users/:id
 // @access   Private/Admin
 const getUserByID = asyncHandler(async (req, res) => {
-    res.send("get user by id");
+  res.send("get user by id");
 });
 
 // @desc     Delete user
@@ -62,7 +75,17 @@ const deleteUser = asyncHandler(async (req, res) => {
 // @route    PUT /api/users/:id
 // @access   Private/Admin
 const updateUser = asyncHandler(async (req, res) => {
-  res.send('update user');
+  res.send("update user");
 });
 
-export { authUser, registerUser, logoutUser, getUserProfile, updateUserProfile, getUsers, deleteUser, getUserByID, updateUser }
+export {
+  authUser,
+  registerUser,
+  logoutUser,
+  getUserProfile,
+  updateUserProfile,
+  getUsers,
+  deleteUser,
+  getUserByID,
+  updateUser,
+};
