@@ -9,10 +9,10 @@ const ShippingScreen = () => {
     const cart = useSelector((state) => state.cart);
     const { shippingAddress } = cart;
 
-    const [address, setAddress] = useState(shippingAddress.address || '');
-    const [city, setCity] = useState(shippingAddress.city ||'');
-    const [postalCode, setPostalCode] = useState(shippingAddress.postalCode || '');
-    const [country, setCountry] = useState(shippingAddress.country || '');
+    const [address, setAddress] = useState(shippingAddress?.address || '');
+    const [city, setCity] = useState(shippingAddress?.city ||'');
+    const [postalCode, setPostalCode] = useState(shippingAddress?.postalCode || '');
+    const [country, setCountry] = useState(shippingAddress?.country || '');
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -25,7 +25,7 @@ const ShippingScreen = () => {
 
   return (
     <FormContainer>
-        <h1>Shipping Screen</h1>
+        <h1>Shipping</h1>
 
         <Form onSubmit={submitHandler}>
             <Form.Group controlId="address" className="my-2">
