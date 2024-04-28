@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
@@ -25,7 +25,7 @@ function PlaceOrdersScreen() {
   }, [cart.paymentMethod, cart.shippingAddress.address, navigate]);
 
   const placeOrderHandler = async () => {
-     try {
+    try {
       const res = await createOrder({
         orderItems: cart.cartItems,
         shippingAddress: cart.shippingAddress,
@@ -37,9 +37,9 @@ function PlaceOrdersScreen() {
       }).unwrap();
       dispatch(clearCartItems());
       navigate(`/order/${res._id}`);
-     } catch (error) {
+    } catch (error) {
       toast.error(error);
-     }
+    }
   };
 
   return (
@@ -62,6 +62,7 @@ function PlaceOrdersScreen() {
             <ListGroup.Item>
               <h2>Payment Method</h2>
               <strong>Method: </strong>
+              {cart.paymentMethod}
             </ListGroup.Item>
 
             <ListGroup.Item>
@@ -72,22 +73,27 @@ function PlaceOrdersScreen() {
                 <ListGroup variant="flush">
                   {cart.cartItems.map((item, index) => (
                     <ListGroup.Item key={index}>
-                      <Row>
-                        <Col md={1}>
-                          <Image src={item.image} alt={item.name} fluid rounded/>
-                        </Col>
+                    <Row>
+                      <Col md={1}>
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          fluid
+                          rounded
+                        />
+                      </Col>
 
-                        <Col>
-                          <Link to={`/products/${item.product}`}>
-                            {item.name}
-                          </Link>
-                        </Col>
+                      <Col>
+                        <Link to={`/product/${item.product}`}>
+                          {item.name}
+                        </Link>
+                      </Col>
 
-                        <Col md={4}>
-                          {item.qty} x {item.price} = <i class="fa fa-inr"></i>{item.qty * item.price}
-                        </Col>
-                      </Row>
-                    </ListGroup.Item>
+                      <Col md={4}>
+                        {item.qty} x {item.price} = <i class="fa fa-inr"></i> {item.qty * item.price}
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
                   ))}
                 </ListGroup>
               )}
@@ -104,40 +110,58 @@ function PlaceOrdersScreen() {
               <ListGroup.Item>
                 <Row>
                   <Col>Items: </Col>
-                  <Col><i class="fa fa-inr"></i>{cart.itemsPrice}</Col>
+                  <Col>
+                    <i class="fa fa-inr"></i>
+                    {cart.itemsPrice}
+                  </Col>
                 </Row>
               </ListGroup.Item>
 
               <ListGroup.Item>
                 <Row>
                   <Col>Shipping: </Col>
-                  <Col><i class="fa fa-inr"></i>{cart.shippingPrice}</Col>
+                  <Col>
+                    <i class="fa fa-inr"></i>
+                    {cart.shippingPrice}
+                  </Col>
                 </Row>
               </ListGroup.Item>
 
               <ListGroup.Item>
                 <Row>
                   <Col>Tax: </Col>
-                  <Col><i class="fa fa-inr"></i>{cart.taxPrice}</Col>
+                  <Col>
+                    <i class="fa fa-inr"></i>
+                    {cart.taxPrice}
+                  </Col>
                 </Row>
               </ListGroup.Item>
 
               <ListGroup.Item>
                 <Row>
                   <Col>Total: </Col>
-                  <Col><i class="fa fa-inr"></i>{cart.totalPrice}</Col>
+                  <Col>
+                    <i class="fa fa-inr"></i>
+                    {cart.totalPrice}
+                  </Col>
                 </Row>
               </ListGroup.Item>
 
               <ListGroup.Item>
-                { error && <Message variant='danger'>{error}</Message> }
+                {error && <Message variant="danger">{error.data.message}</Message>}
               </ListGroup.Item>
 
               <ListGroup.Item>
-                <Button type="button" className="btn-block" disabled={cart.cartItems.length === 0} onClick={placeOrderHandler}>Place Order</Button>
-                { isLoading && <Loader/>}
+                <Button
+                  type="button"
+                  className="btn-block"
+                  disabled={cart.cartItems === 0}
+                  onClick={placeOrderHandler}
+                >
+                  Place Order
+                </Button>
+                {isLoading && <Loader />}
               </ListGroup.Item>
-              
             </ListGroup>
           </Card>
         </Col>
