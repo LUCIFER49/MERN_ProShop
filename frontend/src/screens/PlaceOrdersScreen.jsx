@@ -142,7 +142,7 @@ function PlaceOrdersScreen() {
                   <Col>Total: </Col>
                   <Col>
                     <i class="fa fa-inr"></i>
-                    {cart.totalPrice}
+                    {cart.totalPrice} 
                   </Col>
                 </Row>
               </ListGroup.Item>
