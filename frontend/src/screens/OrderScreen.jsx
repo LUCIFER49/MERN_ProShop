@@ -1,7 +1,9 @@
 import { Link, useParams } from "react-router-dom";
-import { Row, Col, ListGroup, Image, Form, Button, Card, } from "react-bootstrap";
+import { Row, Col, ListGroup, Image, Form, Button, Card, ListGroupItem, } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
+import { toast } from "react-toastify";
 import { useGetOrderDetailsQuery } from "../slices/ordersApiSlice";
 
 const OrderScreen = () => {
@@ -57,29 +59,68 @@ const OrderScreen = () => {
 
             <ListGroup.Item>
               <h2>Order Items</h2>
-              { order.orderItems.map((item, index) => (
-                <ListGroup.Item key={index} >
-                  <Row>
-                    <Col md={1}>
-                      <Image src={item.image} alt={item.name} fluid rounded />
-                    </Col>
-
-                    <Col>
-                    <Link to={`/product/${item.product}`}>
-                      {item.name}
-                    </Link>
-                    </Col>
-
-                    <Col md={4}>
-                      {item.qty} x {item.price} = <i class="fa fa-inr"></i> {item.qty * item.price}
-                    </Col>
-                  </Row>
-                </ListGroup.Item>
-              ))}
+              { order.orderItems.length === 0 ? (
+                <Message>Order is empty</Message>
+              ) : (
+                <ListGroup variant="flush">
+                  {order.orderItems.map((item, index) => (
+                    <ListGroup.Item key={index} >
+                    <Row>
+                      <Col md={1} >
+                        <Image src={item.image} alt={item.name} fluid rounded />
+                      </Col>
+  
+                      <Col>
+                        <Link to={`/product/${item.product}`}>
+                          {item.name}
+                        </Link>
+                      </Col>
+  
+                      <Col md={4}>
+                        {item.qty} x {item.price} = <i class="fa fa-inr"></i> {(item.qty * (item.price * 100)) / 100}
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                  ))}
+                </ListGroup>
+              )}
             </ListGroup.Item>
           </ListGroup>
         </Col>
-        <Col md={4}>Column</Col>
+        <Col md={4}>
+          <Card>
+            <ListGroup variant="flush" >
+              <ListGroup.Item>
+                <h2>Order Summary</h2>
+              </ListGroup.Item>
+              
+              <ListGroup.Item>
+                <Row>
+                  <Col>Items</Col>
+                  <Col><i class="fa fa-inr"></i> {order.itemsPrice}</Col>
+                </Row>
+
+                <Row>
+                  <Col>Shipping</Col>
+                  <Col><i class="fa fa-inr"></i> {order.shippingPrice}</Col>
+                </Row>
+
+                <Row>
+                  <Col>Tax</Col>
+                  <Col><i class="fa fa-inr"></i> {order.taxPrice}</Col>
+                </Row>
+
+                <Row>
+                  <Col>Total</Col>
+                  <Col><i class="fa fa-inr"></i> {order.totalPrice}</Col>
+                </Row>
+
+              </ListGroup.Item>
+              {/* Pay order placeholder */}
+              {/* Mark as delivered playholder */}
+            </ListGroup>
+          </Card>
+        </Col>
       </Row>
     </>
   );
