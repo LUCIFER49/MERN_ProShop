@@ -143,7 +143,7 @@ const OrderScreen = () => {
                       </Col>
   
                       <Col md={4}>
-                        {item.qty} x {item.price} = <i class="fa fa-inr"></i> {(item.qty * (item.price * 100)) / 100}
+                        {item.qty} x {item.price} = <i class="fa fa-inr"></i> {item.qty * item.price}
                       </Col>
                     </Row>
                   </ListGroup.Item>
@@ -189,7 +189,7 @@ const OrderScreen = () => {
 
                   {isPending ? <Loader/> : (
                     <div>
-                      {/* <Button onClick={ onApproveTest } style={{marginBottom: '10px'}}>Test Pay Order</Button> */}
+                      <Button onClick={ onApproveTest } style={{marginBottom: '10px'}}>Test Pay Order</Button>
                       <div>
                         <PayPalButtons createOrder={ createOrder } onApprove={ onApprove } onError={ onError }></PayPalButtons>
                       </div>
