@@ -1,4 +1,5 @@
 import React from "react";
+import reportWebVitals from "./reportWebVitals";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider, } from "react-router-dom";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
@@ -7,7 +8,6 @@ import store from "./store";
 import "./assets/styles/index.css";
 import "./assets/styles/bootstrap.custom.css";
 import App from "./App";
-import reportWebVitals from "./reportWebVitals";
 import PrivateRoute from "./components/PrivateRoute";
 import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
@@ -19,6 +19,9 @@ import PaymentScreen from "./screens/PaymentScreen";
 import PlaceOrdersScreen from "./screens/PlaceOrdersScreen";
 import OrderScreen from "./screens/OrderScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import AdminRoute from "./components/AdminRoute";
+import OrderListScreen from "./screens/admin/OrderListScreen";
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -35,7 +38,10 @@ const router = createBrowserRouter(
         <Route path="/placeorder" element={<PlaceOrdersScreen />} />
         <Route path="/order/:id" element={<OrderScreen />} />
         <Route path="/profile" element={<ProfileScreen />} />
+      </Route>
 
+      <Route path="" element={<AdminRoute/> }>
+        <Route path="/admin/orderlist" element={<OrderListScreen />} />
       </Route>
     </Route>
   )
