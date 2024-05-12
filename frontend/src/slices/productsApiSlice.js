@@ -20,8 +20,17 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+
+    // For creating a Product in database
+    createProduct: builder.mutation({
+      query: () => ({
+        url: PRODUCT_URL,
+        method: 'POST',
+      }),
+      invalidatesTags: ['Product'],
+    })
   }),
 });
 
 // How to export a Query for fetching data
-export const { useGetProductsQuery, useGetProductDetailsQuery } = productsApiSlice;
+export const { useGetProductsQuery, useGetProductDetailsQuery, useCreateProductMutation } = productsApiSlice;
