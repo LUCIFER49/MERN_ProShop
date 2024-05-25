@@ -47,9 +47,35 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: data,
       }),
+    }),
+
+    // Delete Product 
+    deleteProduct: builder.mutation({
+      query: (productId) => ({
+        url: `${PRODUCT_URL}/${productId}`,
+        method: 'DELETE',
+      }),
+      providesTags: ['Product'],
+    }),
+
+    // Creating Reviews
+    createReview: builder.mutation({
+      query: (data) => ({
+        url: `${PRODUCT_URL}/${data.productId}/reviews`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['Product'],
+    }),
+
+    //
+    getTopProducts: builder.query({
+      query: () => `${PRODUCT_URL}/top`,
+      keepUnusedDataFor: 5,
     })
+
   }),
 });
 
 // How to export a Query for fetching data
-export const { useGetProductsQuery, useGetProductDetailsQuery, useCreateProductMutation, useUpdateProductMutation, useUploadProductImageMutation } = productsApiSlice;
+export const { useGetProductsQuery, useGetProductDetailsQuery, useCreateProductMutation, useUpdateProductMutation, useUploadProductImageMutation, useDeleteProductMutation } = productsApiSlice;
