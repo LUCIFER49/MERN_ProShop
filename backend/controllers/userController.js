@@ -141,7 +141,7 @@ const getUserByID = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id).select('-password');
 
   if(user) {
-    res.json(404);
+    res.json(user);
   } else {
     res.status(404);
     throw new Error('User not found');
