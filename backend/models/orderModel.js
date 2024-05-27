@@ -1,3 +1,4 @@
+// For Order data in MongoDB
 import mongoose from "mongoose";
 
 const orderSchema = mongoose.Schema({

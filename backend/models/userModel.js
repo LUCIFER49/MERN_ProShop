@@ -1,3 +1,4 @@
+// For User data in MongoDB
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 

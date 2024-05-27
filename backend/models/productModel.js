@@ -1,3 +1,4 @@
+// For Product data in MongoDB
 import mongoose from "mongoose";
 
 const reviewSchema = mongoose.Schema({
