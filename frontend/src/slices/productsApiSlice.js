@@ -6,8 +6,9 @@ export const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // For All Product
     getProducts: builder.query({
-      query: () => ({
+      query: ({ pageNumber }) => ({
         url: PRODUCT_URL,
+        params: { pageNumber },
       }),
       providesTags: ['Product'],
       keepUnusedDataFor: 5,
