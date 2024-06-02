@@ -47,6 +47,7 @@ const ProductEditScreen = () => {
       toast.error(result.error);
     } else {
       toast.success("Product updated");
+      refetch();
       navigate('/admin/productlist')
     }
   }
@@ -93,6 +94,8 @@ const ProductEditScreen = () => {
               <Form.Control type="text" placeholder="Enter Image URL" value={ image } onChange={(e) => setImage} ></Form.Control>
               <Form.Control type="file" Label="Choose file" onChange={uploadFileHandler} ></Form.Control>
             </Form.Group>
+
+            {loadingUpload && <Loader />}
 
             {/* Product Brand placeholder */}
             <Form.Group controlId="brand" className="my-2">
