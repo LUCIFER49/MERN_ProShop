@@ -7,10 +7,11 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { useParams, Link } from "react-router-dom";
 import Paginate from "../components/Paginate";
+import ProductCarousel from "../components/ProductCarousel";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
 
 const HomeScreen = () => {
-  const { pageNumber, keyword } = useParams(); 
+  const { pageNumber, keyword } = useParams();
 
   // const [products, setProducts] = useState([]);
 
@@ -23,17 +24,27 @@ const HomeScreen = () => {
   //   fetchProducts();
   // }, []);
 
-
   // Using Redux Toolkit for fetching data & handling try catch
-  const { data , isLoading, error } = useGetProductsQuery({ keyword, pageNumber });
+  const { data, isLoading, error } = useGetProductsQuery({
+    keyword,
+    pageNumber,
+  });
 
   return (
     <>
-      { keyword && <Link to="/" className="btn btn-light mb-4">Go Back</Link> }
+      {!keyword ? (
+        <ProductCarousel />
+      ) : (
+        <Link to="/" className="btn btn-light mb-4">
+          Go Back
+        </Link>
+      )}
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message variant="danger">{error?.data?.message || error.error}</Message>
+        <Message variant="danger">
+          {error?.data?.message || error.error}
+        </Message>
       ) : (
         <>
           <h1>Latest Products</h1>
@@ -44,7 +55,11 @@ const HomeScreen = () => {
               </Col>
             ))}
           </Row>
-          <Paginate pages={data.pages} page={data.page} keyword={keyword ? keyword : ''} />
+          <Paginate
+            pages={data.pages}
+            page={data.page}
+            keyword={keyword ? keyword : ""}
+          />
         </>
       )}
     </>
