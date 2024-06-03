@@ -8,7 +8,7 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {      //state: current state of cart && action: any data in payload
-      const item = action.payload;
+      const { user, rating, numReviews, reviews, ...item } = action.payload;
 
       const existItem = state.cartItems.find((x) => x._id === item._id);
 
@@ -18,33 +18,33 @@ const cartSlice = createSlice({
         state.cartItems = [...state.cartItems, item];
       }
 
-      return updateCart(state);
+      return updateCart(state, item);
     },
 
     removeFromCart: (state, action) => {
       state.cartItems = state.cartItems.filter((x) => x._id  !== action.payload);
-
       return updateCart(state);
     },
 
     saveShippingAddress: (state, action) => {
       state.shippingAddress = action.payload;
-      return updateCart(state);
+      localStorage.setItem('cart', JSON.stringify(state));
     },
 
     savePaymentMethod: (state, action) => {
       state.paymentMethod = action.payload;
-      return updateCart(state);
+      localStorage.setItem('cart', JSON.stringify(state));
     },
 
     clearCartItems: (state, action) => {
       state.cartItems = [];
-      return updateCart(state);
-    }
+      localStorage.setItem('cart', JSON.stringify(state));
+    },
+    resetCart: (state) => (state = initialState)
 
   }, //it will contains all the functions(or actions) that are related to cart
 });
 
-export const { addToCart, removeFromCart, saveShippingAddress, savePaymentMethod, clearCartItems } = cartSlice.actions;
+export const { addToCart, removeFromCart, saveShippingAddress, savePaymentMethod, clearCartItems, resetCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
